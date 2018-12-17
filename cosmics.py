@@ -704,36 +704,33 @@ def subsample(a): # this is more a generic function then a method ...
 	
 	
 	
-
 def rebin(a, newshape):
-	"""
-	Auxiliary function to rebin an ndarray a.
-	U{http://www.scipy.org/Cookbook/Rebinning}
-	
-			>>> a=rand(6,4); b=rebin(a,(3,2))
-		"""
-		
-	shape = a.shape
-	lenShape = len(shape)
-	factor = np.asarray(shape)/np.asarray(newshape)
-	#print(factor)
-	evList = ['a.reshape('] + \
+    """
+    Auxiliary function to rebin an ndarray a.
+    U{http://www.scipy.org/Cookbook/Rebinning}
+            >>> a=rand(6,4); b=rebin(a,(3,2))
+        """
+    
+    shape = a.shape
+    lenShape = len(shape)
+    factor = np.asarray(shape)/np.asarray(newshape)
+    #print(factor)
+    evList = ['a.reshape('] + \
              ['newshape[%d],factor[%d],'%(i,i) for i in range(lenShape)] + \
              [')'] + ['.sum(%d)'%(i+1) for i in range(lenShape)] + \
              ['/factor[%d]'%i for i in range(lenShape)]
 
-	return eval(''.join([int(i) for i in evList]))
+    return eval(''.join(evList))
 
 
 def rebin2x2(a):
-	"""
-	Wrapper around rebin that actually rebins 2 by 2
-	"""
-	inshape = np.array(a.shape)
-	if not (inshape % 2 == np.zeros(2)).all(): # Modulo check to see if size is even
-		raise(RuntimeError, "I want even image shapes !")
+    """
+    Wrapper around rebin that actually rebins 2 by 2
+    """
+    inshape = np.array(a.shape)
+    if not (inshape % 2 == np.zeros(2)).all(): # Modulo check to see if size is even
+        raise RuntimeError("I want even image shapes !")
 
-	return rebin(a, inshape/2)
-		
-	#return rebin(a, np.array([int(i/2) for i in inshape]))
+    
+    return rebin(a, inshape/2)
 
