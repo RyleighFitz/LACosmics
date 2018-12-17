@@ -722,7 +722,7 @@ def rebin(a, newshape):
              [')'] + ['.sum(%d)'%(i+1) for i in range(lenShape)] + \
              ['/factor[%d]'%i for i in range(lenShape)]
 
-	return eval(''.join(evList))
+	return eval(''.join([int(i) for i in evList]))
 
 
 def rebin2x2(a):
