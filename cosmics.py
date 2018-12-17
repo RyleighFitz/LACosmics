@@ -725,13 +725,13 @@ def subsample(a): # this is more a generic function then a method ...
 #	return eval(''.join(evList))
 
 
-def rebin2x2(a):
+#def rebin2x2(a):
 	"""
 	Wrapper around rebin that actually rebins 2 by 2
 	"""
-	inshape = np.array(a.shape)
-	if not (inshape % 2 == np.zeros(2)).all(): # Modulo check to see if size is even
-		raise(RuntimeError, "I want even image shapes !")
+#	inshape = np.array(a.shape)
+#	if not (inshape % 2 == np.zeros(2)).all(): # Modulo check to see if size is even
+#		raise(RuntimeError, "I want even image shapes !")
 		
-	return rebin(a, inshape/2)
+#	return rebin(a, inshape/2)
 
