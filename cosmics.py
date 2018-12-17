@@ -166,7 +166,7 @@ class cosmicsimage:
 		# For plotting purposes, we want to transform this into the center of each object.
 		if len(slicecouplelist) != n:
 			# This never happened, but you never know ...
-			raise RuntimeError, "Mega error in labelmask !"
+			raise(RuntimeError, "Mega error in labelmask !")
 		centers = [[(tup[0].start + tup[0].stop)/2.0, (tup[1].start + tup[1].stop)/2.0] for tup in slicecouplelist]
 		# We also want to know how many pixels where affected by each cosmic ray.
 		# Why ? Dunno... it's fun and available in scipy :-)
@@ -248,7 +248,7 @@ class cosmicsimage:
 			
 			if np.alen(goodcutout) >= 25 :
 				# This never happened, but you never know ...
-				raise RuntimeError, "Mega error in clean !"
+				raise(RuntimeError, "Mega error in clean !")
 			elif np.alen(goodcutout) > 0 :
 				replacementvalue = np.median(goodcutout)
 			else :	
@@ -352,7 +352,7 @@ class cosmicsimage:
 		if verbose == None:
 			verbose = self.verbose
 		if not self.satlevel > 0:
-			raise RuntimeError, "Cannot determine satstars : you gave satlevel <= 0 !" 
+			raise(RuntimeError, "Cannot determine satstars : you gave satlevel <= 0 !") 
 		if self.satstars == None:
 			self.findsatstars(verbose = verbose)
 		return self.satstars
@@ -731,7 +731,7 @@ def rebin2x2(a):
 	"""
 	inshape = np.array(a.shape)
 	if not (inshape % 2 == np.zeros(2)).all(): # Modulo check to see if size is even
-		raise RuntimeError, "I want even image shapes !"
+		raise(RuntimeError, "I want even image shapes !")
 		
 	return rebin(a, inshape/2)
 
