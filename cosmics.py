@@ -120,13 +120,13 @@ class cosmicsimage:
 		self.objlim = objlim
 		self.sigcliplow = sigclip * sigfrac
 		self.satlevel = satlevel
-        	
-        self.verbose = verbose
-        	
-        self.pssl = pssl
-        	
-        self.backgroundlevel = None # only calculated and used if required.
-        self.satstars = None # a mask of the saturated stars, only calculated if required
+			
+		self.verbose = verbose
+			
+		self.pssl = pssl
+			
+		self.backgroundlevel = None # only calculated and used if required.
+		self.satstars = None # a mask of the saturated stars, only calculated if required
 
 	def __str__(self):
 		"""
@@ -418,46 +418,46 @@ class cosmicsimage:
 			print "Creating noise model ..."
 			
 		# We build a custom noise map, so to compare the laplacian to
- 		m5 = ndimage.filters.median_filter(self.cleanarray, size=5, mode='mirror')
- 		# We keep this m5, as I will use it later for the interpolation.
- 		m5clipped = m5.clip(min=0.00001) # As we will take the sqrt
- 		noise = (1.0/self.gain) * np.sqrt(self.gain*m5clipped + self.readnoise*self.readnoise)
+		m5 = ndimage.filters.median_filter(self.cleanarray, size=5, mode='mirror')
+		# We keep this m5, as I will use it later for the interpolation.
+		m5clipped = m5.clip(min=0.00001) # As we will take the sqrt
+		noise = (1.0/self.gain) * np.sqrt(self.gain*m5clipped + self.readnoise*self.readnoise)
  
- 		if verbose:
+		if verbose:
 			print "Calculating Laplacian signal to noise ratio ..."
  
- 		# Laplacian signal to noise ratio :
- 		s = lplus / (2.0 * noise) # the 2.0 is from the 2x2 subsampling
- 		# This s is called sigmap in the original lacosmic.cl
- 		
- 		# We remove the large structures (s prime) :
- 		sp = s - ndimage.filters.median_filter(s, size=5, mode='mirror')
- 		
+		# Laplacian signal to noise ratio :
+		s = lplus / (2.0 * noise) # the 2.0 is from the 2x2 subsampling
+		# This s is called sigmap in the original lacosmic.cl
+		
+		# We remove the large structures (s prime) :
+		sp = s - ndimage.filters.median_filter(s, size=5, mode='mirror')
+		
 		if verbose:
 			print "Selecting candidate cosmic rays ..."
 			
- 		# Candidate cosmic rays (this will include stars + HII regions)
- 		candidates = sp > self.sigclip	
+		# Candidate cosmic rays (this will include stars + HII regions)
+		candidates = sp > self.sigclip	
 		nbcandidates = np.sum(candidates)
 		
 		if verbose:
 			print "  %5i candidate pixels" % nbcandidates
- 		
- 		# At this stage we use the saturated stars to mask the candidates, if available :
- 		if self.satstars != None:
- 			if verbose:
- 				print "Masking saturated stars ..."
- 			candidates = np.logical_and(np.logical_not(self.satstars), candidates)
- 			nbcandidates = np.sum(candidates)
+		
+		# At this stage we use the saturated stars to mask the candidates, if available :
+		if self.satstars != None:
+			if verbose:
+				print "Masking saturated stars ..."
+			candidates = np.logical_and(np.logical_not(self.satstars), candidates)
+			nbcandidates = np.sum(candidates)
 		
 			if verbose:
 				print "  %5i candidate pixels not part of saturated stars" % nbcandidates
- 		
+		
 		if verbose:
 			print "Building fine structure image ..."
 			
- 		# We build the fine structure image :
- 		m3 = ndimage.filters.median_filter(self.cleanarray, size=3, mode='mirror')
+		# We build the fine structure image :
+		m3 = ndimage.filters.median_filter(self.cleanarray, size=3, mode='mirror')
 		m37 = ndimage.filters.median_filter(m3, size=7, mode='mirror')
 		f = m3 - m37
 		# In the article that's it, but in lacosmic.cl f is divided by the noise...
@@ -498,10 +498,10 @@ class cosmicsimage:
 		
 		# Again, we have to kick out pixels on saturated stars :
 		if self.satstars != None:
- 			if verbose:
- 				print "Masking saturated stars ..."
- 			finalsel = np.logical_and(np.logical_not(self.satstars), finalsel)
- 			
+			if verbose:
+				print "Masking saturated stars ..."
+			finalsel = np.logical_and(np.logical_not(self.satstars), finalsel)
+			
 		nbfinal = np.sum(finalsel)
 		
 		if verbose:
@@ -556,24 +556,24 @@ class cosmicsimage:
 		
 		tofits("lplus.fits", lplus)
 		
- 		m5 = ndimage.filters.median_filter(self.cleanarray, size=5, mode='mirror')
- 		m5clipped = m5.clip(min=0.00001)
- 		noise = (1.0/self.gain) * np.sqrt(self.gain*m5clipped + self.readnoise*self.readnoise)
+		m5 = ndimage.filters.median_filter(self.cleanarray, size=5, mode='mirror')
+		m5clipped = m5.clip(min=0.00001)
+		noise = (1.0/self.gain) * np.sqrt(self.gain*m5clipped + self.readnoise*self.readnoise)
  
- 		s = lplus / (2.0 * noise) # the 2.0 is from the 2x2 subsampling
- 		# This s is called sigmap in the original lacosmic.cl
- 		
- 		# We remove the large structures (s prime) :
- 		sp = s - ndimage.filters.median_filter(s, size=5, mode='mirror')
- 		
- 		holes = sp > self.sigclip	
+		s = lplus / (2.0 * noise) # the 2.0 is from the 2x2 subsampling
+		# This s is called sigmap in the original lacosmic.cl
+		
+		# We remove the large structures (s prime) :
+		sp = s - ndimage.filters.median_filter(s, size=5, mode='mirror')
+		
+		holes = sp > self.sigclip	
 		"""
 		"""
 		# We have to kick out pixels on saturated stars :
 		if self.satstars != None:
- 			if verbose:
- 				print "Masking saturated stars ..."
- 			holes = np.logical_and(np.logical_not(self.satstars), holes)
+			if verbose:
+				print "Masking saturated stars ..."
+			holes = np.logical_and(np.logical_not(self.satstars), holes)
 		
 		if verbose:
 			print "%i hole pixels found" % np.sum(holes)
@@ -710,19 +710,19 @@ def rebin(a, newshape):
 	Auxiliary function to rebin an ndarray a.
 	U{http://www.scipy.org/Cookbook/Rebinning}
 	
-        	>>> a=rand(6,4); b=rebin(a,(3,2))
-        """
-        
-        shape = a.shape
-        lenShape = len(shape)
-        factor = np.asarray(shape)/np.asarray(newshape)
-        #print factor
-        evList = ['a.reshape('] + \
-                 ['newshape[%d],factor[%d],'%(i,i) for i in xrange(lenShape)] + \
-                 [')'] + ['.sum(%d)'%(i+1) for i in xrange(lenShape)] + \
-                 ['/factor[%d]'%i for i in xrange(lenShape)]
+			>>> a=rand(6,4); b=rebin(a,(3,2))
+		"""
+		
+		shape = a.shape
+		lenShape = len(shape)
+		factor = np.asarray(shape)/np.asarray(newshape)
+		#print factor
+		evList = ['a.reshape('] + \
+				 ['newshape[%d],factor[%d],'%(i,i) for i in xrange(lenShape)] + \
+				 [')'] + ['.sum(%d)'%(i+1) for i in xrange(lenShape)] + \
+				 ['/factor[%d]'%i for i in xrange(lenShape)]
 
-        return eval(''.join(evList))
+		return eval(''.join(evList))
 
 
 def rebin2x2(a):
