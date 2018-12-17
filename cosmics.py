@@ -733,5 +733,5 @@ def rebin2x2(a):
 	if not (inshape % 2 == np.zeros(2)).all(): # Modulo check to see if size is even
 		raise(RuntimeError, "I want even image shapes !")
 		
-	return rebin(a, inshape/2)
+	return rebin(a, np.array([int(i/2) for i in inshape]))
 
