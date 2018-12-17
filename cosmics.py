@@ -705,7 +705,7 @@ def subsample(a): # this is more a generic function then a method ...
 	
 	
 
-def rebin(a, newshape):
+#def rebin(a, newshape):
 	"""
 	Auxiliary function to rebin an ndarray a.
 	U{http://www.scipy.org/Cookbook/Rebinning}
@@ -713,16 +713,16 @@ def rebin(a, newshape):
 			>>> a=rand(6,4); b=rebin(a,(3,2))
 		"""
 		
-	shape = a.shape
-	lenShape = len(shape)
-	factor = np.asarray(shape)/np.asarray(newshape)
+#	shape = a.shape
+#	lenShape = len(shape)
+#	factor = np.asarray(shape)/np.asarray(newshape)
 	#print factor
-	evList = ['a.reshape('] + \
-			 ['newshape[%d],factor[%d],'%(i,i) for i in list(range(lenShape))] + \
-			 [')'] + ['.sum(%d)'%(i+1) for i in list(range(lenShape))] + \
-			 ['/factor[%d]'%i for i in list(range(lenShape))]
+#	evList = ['a.reshape('] + \
+#			 ['newshape[%d],factor[%d],'%(i,i) for i in list(range(lenShape))] + \
+#			 [')'] + ['.sum(%d)'%(i+1) for i in list(range(lenShape))] + \
+#			 ['/factor[%d]'%i for i in list(range(lenShape))]
 
-	return eval(''.join(evList))
+#	return eval(''.join(evList))
 
 
 def rebin2x2(a):
